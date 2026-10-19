@@ -28,8 +28,14 @@ public class ProductService {
                 .findFirst();
     }
 
-    // removeIf is safe - removing inside a for loop throws ConcurrentModificationException
     public void deleteProduct(Long id) {
         products.removeIf(p -> p.getId().equals(id));
+    }
+
+    // Go through the list, keep the ones whose name contains the text, collect them
+    public List<Product> findByName(String name) {
+        return products.stream()
+                .filter(p -> p.getName().contains(name))
+                .toList();
     }
 }
