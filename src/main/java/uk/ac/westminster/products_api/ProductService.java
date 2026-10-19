@@ -22,10 +22,14 @@ public class ProductService {
         return product;
     }
 
-    // Use equals(), never == when comparing Long values
     public Optional<Product> getProductById(Long id) {
         return products.stream()
                 .filter(p -> p.getId().equals(id))
                 .findFirst();
+    }
+
+    // removeIf is safe - removing inside a for loop throws ConcurrentModificationException
+    public void deleteProduct(Long id) {
+        products.removeIf(p -> p.getId().equals(id));
     }
 }
