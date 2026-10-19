@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -16,8 +17,15 @@ public class ProductService {
     }
 
     public Product addProduct(Product product) {
-        product.setId(nextId++);   // use the value, then add one
+        product.setId(nextId++);
         products.add(product);
         return product;
+    }
+
+    // Use equals(), never == when comparing Long values
+    public Optional<Product> getProductById(Long id) {
+        return products.stream()
+                .filter(p -> p.getId().equals(id))
+                .findFirst();
     }
 }
